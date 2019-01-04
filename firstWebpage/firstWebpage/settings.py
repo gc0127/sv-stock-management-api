@@ -25,7 +25,7 @@ SECRET_KEY = 'q75@k52!hi#j-=$g&e-&05%38$&hg5y*50g4-h2wf9db9(czo!'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.1.250', '127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['192.168.1.250', '127.0.0.1', 'localhost','gsbtstockmangement.pythonanywhere.com']
 
 
 # Application definition

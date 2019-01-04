@@ -35,11 +35,32 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="api.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="api.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/firstPage/api.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
-              <caret line="189" selection-start-line="188" selection-start-column="8" selection-end-line="189" />
+            <state>
+              <caret lean-forward="true" />
+              <folding>
+                <element signature="e#0#25#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="manage.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/manage.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="238">
+              <caret line="15" lean-forward="true" selection-start-line="15" selection-end-line="15" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="settings.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/firstWebpage/settings.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="245">
+              <caret line="27" column="60" selection-start-line="27" selection-start-column="60" selection-end-line="27" selection-end-column="60" />
             </state>
           </provider>
         </entry>
@@ -88,19 +109,19 @@
         <option value="$PROJECT_DIR$/firstWebpage/urls.py" />
         <option value="$PROJECT_DIR$/firstWebpage/middleware.py" />
         <option value="$PROJECT_DIR$/firstPage/middleware.py" />
-        <option value="$PROJECT_DIR$/firstWebpage/settings.py" />
         <option value="$PROJECT_DIR$/firstPage/urls.py" />
         <option value="$PROJECT_DIR$/authentication/urls.py" />
         <option value="$PROJECT_DIR$/authentication/api.py" />
         <option value="$PROJECT_DIR$/firstPage/serializers.py" />
         <option value="$PROJECT_DIR$/firstPage/models.py" />
         <option value="$PROJECT_DIR$/firstPage/api.py" />
+        <option value="$PROJECT_DIR$/firstWebpage/settings.py" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="1">
-    <option name="x" value="975" />
-    <option name="y" value="36" />
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="433" />
+    <option name="y" value="16" />
     <option name="width" value="885" />
     <option name="height" value="891" />
   </component>
@@ -219,9 +240,10 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="650" y="24" width="590" height="594" extended-state="1" />
+    <frame x="-7" y="-7" width="1295" height="695" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.10069445" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.16315378" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="9" show_stripe_button="false" />
@@ -447,9 +469,6 @@
     <entry file="file://$PROJECT_DIR$/authentication/apps.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/manage.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/firstPage/__init__.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -507,13 +526,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/firstWebpage/settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="107" selection-start-line="107" selection-end-line="107" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/firstWebpage/urls.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="153">
@@ -556,8 +568,25 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/firstPage/api.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="189" selection-start-line="188" selection-start-column="8" selection-end-line="189" />
+        <state>
+          <caret lean-forward="true" />
+          <folding>
+            <element signature="e#0#25#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/manage.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="15" lean-forward="true" selection-start-line="15" selection-end-line="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/firstWebpage/settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="245">
+          <caret line="27" column="60" selection-start-line="27" selection-start-column="60" selection-end-line="27" selection-end-column="60" />
         </state>
       </provider>
     </entry>
