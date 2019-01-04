@@ -289,8 +289,8 @@ def raw_material_log_list(request):
 @api_view(['GET'])
 def raw_material_log_detail(request):
     try:
-        raw_mat_id = request.query_params.get('id').order_by('-date', '-time')
-        raw_material_log = RawMaterialLog.objects.filter(raw_material_id_id=raw_mat_id)
+        raw_mat_id = request.query_params.get('id')
+        raw_material_log = RawMaterialLog.objects.filter(raw_material_id_id=raw_mat_id).order_by('-date', '-time')
     except RawMaterialLog.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
