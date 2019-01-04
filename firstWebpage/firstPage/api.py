@@ -161,7 +161,7 @@ def product_detail(request, pk):
 def product_log_list(request):
     if request.method == 'GET':
 
-        prod_log = ProductLog.objects.all()
+        prod_log = ProductLog.objects.all().order_by('-date', '-time')
         new_prod_log = []
         new_prod_log_dict = []
         # prods = ProductLog.objects.all().select_related('product_id')
@@ -242,7 +242,7 @@ def product_log_detail(request):
     try:
         prod_id = request.query_params.get('id')
         print(prod_id)
-        product_log = ProductLog.objects.filter(product_id_id=prod_id)
+        product_log = ProductLog.objects.filter(product_id_id=prod_id).order_by('-date', '-time')
     except ProductLog.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
@@ -254,7 +254,7 @@ def product_log_detail(request):
 @api_view(['GET', 'POST'])
 def raw_material_log_list(request):
     if request.method == 'GET':
-        queryset = RawMaterialLog.objects.all()
+        queryset = RawMaterialLog.objects.all().order_by('-date', '-time')
         serializer = RawMaterialLogSerializer(queryset, many=True)
         return Response(serializer.data)
 
@@ -289,7 +289,7 @@ def raw_material_log_list(request):
 @api_view(['GET'])
 def raw_material_log_detail(request):
     try:
-        raw_mat_id = request.query_params.get('id')
+        raw_mat_id = request.query_params.get('id').order_by('-date', '-time')
         raw_material_log = RawMaterialLog.objects.filter(raw_material_id_id=raw_mat_id)
     except RawMaterialLog.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
