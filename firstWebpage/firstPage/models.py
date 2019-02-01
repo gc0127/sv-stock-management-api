@@ -5,7 +5,7 @@ from datetime import datetime
 
 class Products(models.Model):
     product_name = models.CharField(max_length=30)
-    quantity = models.IntegerField()
+    quantity = models.FloatField()
 
 
 class RawMaterial(models.Model):
@@ -30,7 +30,7 @@ class ProductLog(models.Model):
 
 class RawMaterialLog(models.Model):
     raw_material_id = models.ForeignKey(RawMaterial, on_delete=models.CASCADE)
-    quantity = models.IntegerField()
+    quantity = models.FloatField()
     date = models.DateField(default=datetime.now().today().strftime('%Y-%m-%d'))
     time = models.TimeField(default=datetime.now().today().strftime('%H:%M:%S'))
     # user_id = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -40,7 +40,7 @@ class RawMaterialLog(models.Model):
 class MasterLog(models.Model):
     item_id = models.IntegerField()  # product id or raw material id
     item_log_id = models.IntegerField()  # product log id or raw material id
-    quantity = models.IntegerField()
+    quantity = models.FloatField()
     # user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     item_type = models.CharField(max_length=20)    # product or raw material
     action = models.CharField(max_length=20)        # add or update
