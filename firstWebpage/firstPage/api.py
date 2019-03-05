@@ -3,9 +3,11 @@ from datetime import datetime
 
 import jsonpickle as jsonpickle
 from django.core import serializers
+from django.core.exceptions import ObjectDoesNotExist
+
 from .serializers import RawMaterialSerializer, ProductSerializer, ProductLogSerializer, RawMaterialLogSerializer, \
     RawMaterialMappingSerializer, MasterLogSerializer, ProductLogNameSerializer, ProductHistorySerializer
-from .models import RawMaterial, Products, ProductLog, RawMaterialLog, RawMaterialMapping, ProductHistory
+from .models import RawMaterial, Products, ProductLog, RawMaterialLog, RawMaterialMapping, ProductHistory, MasterLog
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
@@ -214,19 +216,26 @@ def product_log_list(request):
         product.quantity = prod_qty
         product.save()
 
-        p_id = request.data['product_id']
-        item_list = RawMaterialMapping.objects.filter(product_type_id=p_id)
-        # product_qty = request.data['quantity']
-        for item in item_list:
-            no_of_parts = item.no_of_parts_used
-            rm_id = item.raw_material_type_id
-            raw_material = RawMaterial.objects.get(id=rm_id)
-            raw_material.quantity = raw_material.quantity + (old_qty-new_qty) * no_of_parts
-            if raw_material.item_name == 'Armature':
-                arm_prod = Products.objects.get(product_name="Armature")
-                arm_prod.quantity = raw_material.quantity
-                arm_prod.save()
-            raw_material.save()
+        try:
+            master_row = MasterLog.objects.get(item_log_id=prod_row.id, action='SALE')
+        except ObjectDoesNotExist:
+            master_row = None
+
+        if master_row is None:
+
+            p_id = request.data['product_id']
+            item_list = RawMaterialMapping.objects.filter(product_type_id=p_id)
+            # product_qty = request.data['quantity']
+            for item in item_list:
+                no_of_parts = item.no_of_parts_used
+                rm_id = item.raw_material_type_id
+                raw_material = RawMaterial.objects.get(id=rm_id)
+                raw_material.quantity = raw_material.quantity + (old_qty-new_qty) * no_of_parts
+                if raw_material.item_name == 'Armature':
+                    arm_prod = Products.objects.get(product_name="Armature")
+                    arm_prod.quantity = raw_material.quantity
+                    arm_prod.save()
+                raw_material.save()
 
         if request.data['product_id'] == 6:
             arm = RawMaterial.objects.get(item_name="Armature")
