@@ -22,8 +22,10 @@ from django.http import HttpResponse
 def stocks_list(request):
     
     if request.method == 'GET':
+        sub_products = ['Armature', 'Head Upper Housing 1', 'Head Upper Housing 2', 'Valve Kit Final', 'Drive Housing',
+                        'Pipe Upper Housing', 'MS Pipe Plastic', 'Pipe Lower Housing', 'MS Pipe Steel']
         queryset = RawMaterial.objects.all()
-        queryset = queryset.exclude(item_name='Armature')
+        queryset = queryset.exclude(item_name__in=sub_products)
         serializer = RawMaterialSerializer(queryset, many=True)
         return Response(serializer.data)
 
@@ -79,7 +81,7 @@ def stock_detail(request, pk):
 def product_list(request):
 
         if request.method == "GET":
-            queryset = Products.objects.all()
+            queryset = Products.objects.all().order_by('order')
             serializer = ProductSerializer(queryset, many=True)
             return Response(serializer.data)
 
@@ -111,6 +113,9 @@ def product_list(request):
                 master_log_ser.save()
             print(master_log_ser.errors)
 
+            '''Updating the quantity value in the raw_material table '''
+            sub_products = ['Armature', 'Head Upper Housing 1', 'Head Upper Housing 2', 'Valve Kit Final', 'Drive Housing',
+                            'Pipe Upper Housing', 'MS Pipe Plastic', 'Pipe Lower Housing', 'MS Pipe Steel']
             product_qty = request.data['quantity']
             p_id = request.data['id']
             if product_qty > 0:
@@ -120,22 +125,24 @@ def product_list(request):
                     rm_id = item.raw_material_type_id
                     raw_material = RawMaterial.objects.get(id=rm_id)
                     raw_material.quantity = raw_material.quantity - product_qty * no_of_parts
-                    if raw_material.item_name == 'Armature':
-                        arm_prod = Products.objects.get(product_name="Armature")
-                        arm_prod.quantity = raw_material.quantity
-                        arm_prod.save()
+
+                    if raw_material.item_name in sub_products:
+                        sub_prod = Products.objects.get(product_name=raw_material.item_name)
+                        sub_prod.quantity = raw_material.quantity
+                        sub_prod.save()
                     raw_material.save()
 
+            '''Updating the quantity in product table'''
             new_data = request.data
             prod = Products.objects.get(id=p_id)
             prod_name = prod.product_name
             new_data['quantity'] = new_data['quantity'] + qty
             new_data['product_name'] = prod_name
 
-            if p_id == 6:  # request.data['id']
-                armature_obj = RawMaterial.objects.get(item_name='Armature')
-                armature_obj.quantity = new_data['quantity']
-                armature_obj.save()
+            if prod_name in sub_products:  # request.data['id']
+                sub_product_obj = RawMaterial.objects.get(item_name=prod_name)
+                sub_product_obj.quantity = new_data['quantity']
+                sub_product_obj.save()
 
             serializer = ProductSerializer(product, data=new_data)
             if serializer.is_valid():
@@ -211,6 +218,7 @@ def product_log_list(request):
             master_log_ser.save()
 
         product = Products.objects.get(id=request.data['product_id'])
+        prod_name = product.product_name
         prod_qty = product.quantity
         prod_qty = prod_qty - old_qty + new_qty
         product.quantity = prod_qty
@@ -221,6 +229,8 @@ def product_log_list(request):
         except ObjectDoesNotExist:
             master_row = None
 
+        sub_products = ['Armature', 'Head Upper Housing 1', 'Head Upper Housing 2', 'Valve Kit Final', 'Drive Housing',
+                        'Pipe Upper Housing', 'MS Pipe Plastic', 'Pipe Lower Housing', 'MS Pipe Steel']
         if master_row is None:
 
             p_id = request.data['product_id']
@@ -231,14 +241,14 @@ def product_log_list(request):
                 rm_id = item.raw_material_type_id
                 raw_material = RawMaterial.objects.get(id=rm_id)
                 raw_material.quantity = raw_material.quantity + (old_qty-new_qty) * no_of_parts
-                if raw_material.item_name == 'Armature':
-                    arm_prod = Products.objects.get(product_name="Armature")
+                if raw_material.item_name in sub_products:
+                    arm_prod = Products.objects.get(product_name=raw_material.item_name)
                     arm_prod.quantity = raw_material.quantity
                     arm_prod.save()
                 raw_material.save()
 
-        if request.data['product_id'] == 6:
-            arm = RawMaterial.objects.get(item_name="Armature")
+        if prod_name in sub_products:
+            arm = RawMaterial.objects.get(item_name=prod_name)
             arm.quantity = product.quantity
             arm.save()
 

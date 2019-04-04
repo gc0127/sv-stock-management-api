@@ -6,6 +6,7 @@ from datetime import datetime
 class Products(models.Model):
     product_name = models.CharField(max_length=30)
     quantity = models.FloatField()
+    order = models.IntegerField(default=1)
 
 
 class RawMaterial(models.Model):
