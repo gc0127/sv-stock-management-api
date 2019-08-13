@@ -7,12 +7,14 @@ class Products(models.Model):
     product_name = models.CharField(max_length=30)
     quantity = models.FloatField()
     order = models.IntegerField(default=1)
+    isRawMaterial = models.BooleanField()
 
 
 class RawMaterial(models.Model):
     item_name = models.CharField(max_length=30)
     quantity = models.FloatField()
     unit = models.CharField(max_length=30)
+    isProduct = models.BooleanField()
 
 
 class RawMaterialMapping(models.Model):

@@ -12,6 +12,8 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from django.contrib.auth.models import User
+from rest_framework.pagination import LimitOffsetPagination
+
 import json
 from django.http import HttpResponse
 
@@ -23,7 +25,8 @@ def stocks_list(request):
     
     if request.method == 'GET':
         sub_products = ['Armature', 'Head Upper Housing 1', 'Head Upper Housing 2', 'Valve Kit Final', 'Drive Housing',
-                        'Pipe Upper Housing', 'MS Pipe Plastic', 'Pipe Lower Housing', 'MS Pipe Steel']
+                        'Pipe Upper Housing', 'MS Pipe Plastic', 'Pipe Lower Housing 1', 'MS Pipe Steel',
+                        'Pipe Lower Housing 2']
         queryset = RawMaterial.objects.all()
         queryset = queryset.exclude(item_name__in=sub_products)
         serializer = RawMaterialSerializer(queryset, many=True)
@@ -90,7 +93,7 @@ def product_list(request):
             product = Products.objects.get(id=request.data['id'])
             qty = product.quantity
 
-            '''For String data in Product Log'''
+            '''For Storing data in Product Log'''
             log_ser = ProductLogSerializer(data=request.data)
             log_ser.initial_data['product_id'] = request.data['id']
             log_ser.initial_data['date'] = datetime.now().today().strftime('%Y-%m-%d')
@@ -114,8 +117,9 @@ def product_list(request):
             print(master_log_ser.errors)
 
             '''Updating the quantity value in the raw_material table '''
-            sub_products = ['Armature', 'Head Upper Housing 1', 'Head Upper Housing 2', 'Valve Kit Final', 'Drive Housing',
-                            'Pipe Upper Housing', 'MS Pipe Plastic', 'Pipe Lower Housing', 'MS Pipe Steel']
+            # sub_products = ['Armature', 'Head Upper Housing 1', 'Head Upper Housing 2', 'Valve Kit Final',
+            #                 'Drive Housing', 'Pipe Upper Housing', 'MS Pipe Plastic', 'Pipe Lower Housing 1',
+            #                 'MS Pipe Steel', 'Pipe Lower Housing 2']
             product_qty = request.data['quantity']
             p_id = request.data['id']
             if product_qty > 0:
@@ -126,7 +130,13 @@ def product_list(request):
                     raw_material = RawMaterial.objects.get(id=rm_id)
                     raw_material.quantity = raw_material.quantity - product_qty * no_of_parts
 
-                    if raw_material.item_name in sub_products:
+                    # if raw_material.item_name in sub_products:
+                    #     print(raw_material.item_name)
+                    #     sub_prod = Products.objects.get(product_name=raw_material.item_name)
+                    #     sub_prod.quantity = raw_material.quantity
+                    #     sub_prod.save()
+                    if raw_material.isProduct:
+                        print(raw_material.item_name)
                         sub_prod = Products.objects.get(product_name=raw_material.item_name)
                         sub_prod.quantity = raw_material.quantity
                         sub_prod.save()
@@ -139,7 +149,11 @@ def product_list(request):
             new_data['quantity'] = new_data['quantity'] + qty
             new_data['product_name'] = prod_name
 
-            if prod_name in sub_products:  # request.data['id']
+            # if prod_name in sub_products:  # request.data['id']
+            #     sub_product_obj = RawMaterial.objects.get(item_name=prod_name)
+            #     sub_product_obj.quantity = new_data['quantity']
+            #     sub_product_obj.save()
+            if prod.isRawMaterial:
                 sub_product_obj = RawMaterial.objects.get(item_name=prod_name)
                 sub_product_obj.quantity = new_data['quantity']
                 sub_product_obj.save()
@@ -169,33 +183,41 @@ def product_detail(request, pk):
 @api_view(['GET', 'POST'])
 def product_log_list(request):
     if request.method == 'GET':
+        paginator = LimitOffsetPagination()
+        if request.query_params.get('date'):
+            prod_log = ProductLog.objects.filter(date=request.query_params.get('date')).select_related('product_id').order_by('-time')
 
-        prod_log = ProductLog.objects.all().order_by('-date', '-time')
-        new_prod_log = []
-        new_prod_log_dict = []
-        # prods = ProductLog.objects.all().select_related('product_id')
-        for p in prod_log:
-            log = ProductHistory()
-            log.log_id = str(p.id)
-            # log.product_id = str(p.product_id)
-            log.quantity = p.quantity
-            log.date = str(p.date)
-            log.time = str(p.time)
-            log.product_name = str(p.product_id.product_name)
-            new_prod_log.append(log)
-
-        for log in new_prod_log:
-            new_prod_log_dict.append(log.__dict__)
-
-        jsondata = json.dumps(new_prod_log_dict)
-        print(jsondata)
-        # print(jsonpickle.encode(new_prod_log))
-
-        # print(serializers.serialize("json", new_prod_log))
+        else:
+            prod_log = ProductLog.objects.all().select_related('product_id').order_by('-date', '-time')
+        # new_prod_log = []
+        # new_prod_log_dict = []
+        # # prods = ProductLog.objects.all().select_related('product_id')
+        # for p in prod_log:
+        #     log = ProductHistory()
+        #     log.log_id = str(p.id)
+        #     # log.product_id = str(p.product_id)
+        #     log.quantity = p.quantity
+        #     log.date = str(p.date)
+        #     log.time = str(p.time)
+        #     log.product_name = str(p.product_id.product_name)
+        #     new_prod_log.append(log)
+        #
+        # for log in new_prod_log:
+        #     new_prod_log_dict.append(log.__dict__)
+        #
+        # jsondata = json.dumps(new_prod_log_dict)
+        # print(jsondata)
+        # # print(jsonpickle.encode(new_prod_log))
+        #
+        # # print(serializers.serialize("json", new_prod_log))
         # serializer = ProductHistorySerializer(new_prod_log, many=True)
         # return Response(serializer.data)
         # return Response(serializers.serialize("json", new_prod_log))
-        return HttpResponse(jsondata, content_type="application/json")
+        #return HttpResponse(jsondata, content_type="application/json")
+
+        context = paginator.paginate_queryset(prod_log, request)
+        serializer = ProductLogSerializer(context, many=True)
+        return paginator.get_paginated_response(serializer.data)
 
     # for updating the quantity
     if request.method == 'POST':
@@ -230,7 +252,8 @@ def product_log_list(request):
             master_row = None
 
         sub_products = ['Armature', 'Head Upper Housing 1', 'Head Upper Housing 2', 'Valve Kit Final', 'Drive Housing',
-                        'Pipe Upper Housing', 'MS Pipe Plastic', 'Pipe Lower Housing', 'MS Pipe Steel']
+                        'Pipe Upper Housing', 'MS Pipe Plastic', 'Pipe Lower Housing 1', 'MS Pipe Steel',
+                        'Pipe Lower Housing 2']
         if master_row is None:
 
             p_id = request.data['product_id']
@@ -261,21 +284,46 @@ def product_log_detail(request):
     try:
         prod_id = request.query_params.get('id')
         print(prod_id)
+        paginator = LimitOffsetPagination()
         product_log = ProductLog.objects.filter(product_id_id=prod_id).order_by('-date', '-time')
     except ProductLog.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
     if request.method == 'GET':
-        serializer = ProductLogSerializer(product_log, many=True)
+        context = paginator.paginate_queryset(product_log, request)
+        serializer = ProductLogSerializer(context, many=True)
+        return paginator.get_paginated_response(serializer.data)
+
+
+@api_view(['GET'])
+def get_raw_materials_for_product(request):
+
+    try:
+        prod_id = request.query_params.get('id')
+        product_raw_material_mappings = RawMaterialMapping.objects.filter(product_type=prod_id).select_related('raw_material_type')
+        for mapping in product_raw_material_mappings:
+            print(mapping.raw_material_type.item_name)
+
+    except ProductLog.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'GET':
+        serializer = RawMaterialMappingSerializer(product_raw_material_mappings, many=True)
         return Response(serializer.data)
 
 
 @api_view(['GET', 'POST'])
 def raw_material_log_list(request):
     if request.method == 'GET':
-        queryset = RawMaterialLog.objects.all().order_by('-date', '-time')
-        serializer = RawMaterialLogSerializer(queryset, many=True)
-        return Response(serializer.data)
+        paginator = LimitOffsetPagination()
+        if request.query_params.get('date'):
+            queryset = RawMaterialLog.objects.filter(date=request.query_params.get('date')).order_by('-time').select_related('raw_material_id')
+        else:
+            queryset = RawMaterialLog.objects.all().select_related('raw_material_id').order_by('-date','-time')
+        context = paginator.paginate_queryset(queryset, request)
+        serializer = RawMaterialLogSerializer(context, many=True)
+        #return Response(serializer.data)
+        return paginator.get_paginated_response(serializer.data)
 
     if request.method == 'POST':                          # for updating the quantity
         raw_material_row = RawMaterialLog.objects.get(date=request.data['date'], time=request.data['time'], raw_material_id=request.data['raw_material_id'])
@@ -309,14 +357,16 @@ def raw_material_log_list(request):
 def raw_material_log_detail(request):
     try:
         raw_mat_id = request.query_params.get('id')
+        paginator = LimitOffsetPagination()
         raw_material_log = RawMaterialLog.objects.filter(raw_material_id_id=raw_mat_id).order_by('-date', '-time')
     except RawMaterialLog.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
     if request.method == 'GET':
-        serializer = RawMaterialLogSerializer(raw_material_log, many=True)
-        return Response(serializer.data)
-
+        context = paginator.paginate_queryset(raw_material_log, request)
+        serializer = RawMaterialLogSerializer(context, many=True)
+        return paginator.get_paginated_response(serializer.data)
+        
 
 
 
