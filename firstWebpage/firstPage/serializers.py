@@ -15,18 +15,24 @@ class ProductSerializer(serializers.ModelSerializer):
 
 
 class RawMaterialMappingSerializer(serializers.ModelSerializer):
+    raw_material_type = RawMaterialSerializer()
+
     class Meta:
         model = RawMaterialMapping
-        fields = '__all__'
+        fields = ('raw_material_type', 'no_of_parts_used')
 
 
 class ProductLogSerializer(serializers.ModelSerializer):
+    product_id = ProductSerializer()
+
     class Meta:
         model = ProductLog
         fields = '__all__'
 
 
 class RawMaterialLogSerializer(serializers.ModelSerializer):
+    raw_material_id = RawMaterialSerializer()
+
     class Meta:
         model = RawMaterialLog
         fields = '__all__'
