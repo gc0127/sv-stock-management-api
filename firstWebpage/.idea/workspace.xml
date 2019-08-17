@@ -11,23 +11,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/firstPage/models.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-93">
-              <caret line="45" column="34" lean-forward="true" selection-start-line="45" selection-start-column="34" selection-end-line="45" selection-end-column="34" />
-              <folding>
-                <element signature="e#0#43#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="api.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="api.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/firstPage/api.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="132">
-              <caret line="157" column="31" selection-start-line="157" selection-start-column="31" selection-end-line="157" selection-end-column="31" />
+            <state relative-caret-position="129">
+              <caret line="106" column="48" lean-forward="true" selection-start-line="106" selection-start-column="48" selection-end-line="106" selection-end-column="48" />
               <folding>
                 <element signature="e#0#25#0" expanded="true" />
               </folding>
@@ -43,31 +31,10 @@
       <file leaf-file-name="serializers.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/firstPage/serializers.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
-              <caret line="40" column="33" selection-start-line="40" selection-start-column="6" selection-end-line="40" selection-end-column="33" />
+            <state relative-caret-position="102">
+              <caret line="54" column="46" lean-forward="true" selection-start-line="54" selection-start-column="46" selection-end-line="54" selection-end-column="46" />
               <folding>
                 <element signature="e#0#38#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="settings.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/firstWebpage/settings.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="353">
-              <caret line="134" column="11" lean-forward="true" selection-start-line="134" selection-start-column="11" selection-end-line="134" selection-end-column="11" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="urls.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/firstPage/urls.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="463">
-              <caret line="33" lean-forward="true" selection-start-line="33" selection-end-line="33" />
-              <folding>
-                <element signature="e#128#160#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -78,6 +45,18 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="391">
               <caret line="25" selection-start-line="25" selection-end-line="25" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="models.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/firstPage/models.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="435">
+              <caret line="62" column="1" lean-forward="true" selection-start-line="62" selection-start-column="1" selection-end-line="62" selection-end-column="1" />
+              <folding>
+                <element signature="e#0#43#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -95,6 +74,8 @@
     <findStrings>
       <find>rest</find>
       <find>select_related</find>
+      <find>item_id</find>
+      <find>item_id_id</find>
       <find>select</find>
     </findStrings>
   </component>
@@ -113,13 +94,13 @@
         <option value="$PROJECT_DIR$/authentication/api.py" />
         <option value="$PROJECT_DIR$/firstWebpage/settings.py" />
         <option value="$PROJECT_DIR$/firstPage/urls.py" />
-        <option value="$PROJECT_DIR$/firstPage/models.py" />
         <option value="$PROJECT_DIR$/firstPage/serializers.py" />
         <option value="$PROJECT_DIR$/firstPage/api.py" />
+        <option value="$PROJECT_DIR$/firstPage/models.py" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="-11" />
     <option name="width" value="765" />
     <option name="height" value="1031" />
@@ -188,8 +169,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1295" height="695" extended-state="6" />
-    <editor active="true" />
+    <frame x="-7" y="-7" width="1295" height="695" extended-state="7" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.20062451" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -197,7 +177,7 @@
       <window_info anchor="bottom" id="Version Control" order="9" show_stripe_button="false" />
       <window_info anchor="bottom" id="Python Console" order="7" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="8" sideWeight="0.88602656" visible="true" weight="0.38009787" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="8" sideWeight="0.88602656" visible="true" weight="0.36052203" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Version Control" order="9" show_stripe_button="false" />
@@ -484,13 +464,6 @@
     <entry file="file://$PROJECT_DIR$/firstPage/apps.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/manage.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="15" lean-forward="true" selection-start-line="15" selection-end-line="15" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/db.sqlite3">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -518,16 +491,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/firstPage/serializers.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="40" column="33" selection-start-line="40" selection-start-column="6" selection-end-line="40" selection-end-column="33" />
-          <folding>
-            <element signature="e#0#38#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/firstWebpage/urls.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="391">
@@ -535,22 +498,39 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/firstPage/models.py">
+    <entry file="file://$PROJECT_DIR$/firstPage/serializers.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-93">
-          <caret line="45" column="34" lean-forward="true" selection-start-line="45" selection-start-column="34" selection-end-line="45" selection-end-column="34" />
+        <state relative-caret-position="102">
+          <caret line="54" column="46" lean-forward="true" selection-start-line="54" selection-start-column="46" selection-end-line="54" selection-end-column="46" />
           <folding>
-            <element signature="e#0#43#0" expanded="true" />
+            <element signature="e#0#38#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/firstPage/api.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="132">
-          <caret line="157" column="31" selection-start-line="157" selection-start-column="31" selection-end-line="157" selection-end-column="31" />
+        <state relative-caret-position="129">
+          <caret line="106" column="48" lean-forward="true" selection-start-line="106" selection-start-column="48" selection-end-line="106" selection-end-column="48" />
           <folding>
             <element signature="e#0#25#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/manage.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="15" lean-forward="true" selection-start-line="15" selection-end-line="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/firstPage/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="435">
+          <caret line="62" column="1" lean-forward="true" selection-start-line="62" selection-start-column="1" selection-end-line="62" selection-end-column="1" />
+          <folding>
+            <element signature="e#0#43#0" expanded="true" />
           </folding>
         </state>
       </provider>

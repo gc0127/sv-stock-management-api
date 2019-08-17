@@ -41,7 +41,7 @@ class RawMaterialLog(models.Model):
 
 
 class MasterLog(models.Model):
-    item_id = models.ForeignKey(Products, on_delete=models.CASCADE)  # product id or raw material id
+    item = models.ForeignKey(Products, on_delete=models.CASCADE)  # product id or raw material id
     item_log_id = models.IntegerField()  # product log id or raw material id
     quantity = models.FloatField()
     # user_id = models.ForeignKey(User, on_delete=models.CASCADE)
