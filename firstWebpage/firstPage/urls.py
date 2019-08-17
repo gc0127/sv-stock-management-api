@@ -24,7 +24,9 @@ urlpatterns = [url(r'^products/$', api.product_list),
 
 
                url(r'^rawMaterialLog/$', api.raw_material_log_list),
-               url(r'^rawMaterialLog/specific/$', api.raw_material_log_detail)]
+               url(r'^rawMaterialLog/specific/$', api.raw_material_log_detail),
+
+               url(r'^products/saleHistory/$', api.get_sale_history)]
 
 
 # urlpatterns += router.urls

@@ -6,7 +6,8 @@ from django.core import serializers
 from django.core.exceptions import ObjectDoesNotExist
 
 from .serializers import RawMaterialSerializer, ProductSerializer, ProductLogSerializer, RawMaterialLogSerializer, \
-    RawMaterialMappingSerializer, MasterLogSerializer, ProductLogNameSerializer, ProductHistorySerializer
+    RawMaterialMappingSerializer, MasterLogSerializer, ProductLogNameSerializer, ProductHistorySerializer, \
+    ProductLogResponseSerializer, RawMaterialLogResponseSerializer, MasterLogResponseSerializer
 from .models import RawMaterial, Products, ProductLog, RawMaterialLog, RawMaterialMapping, ProductHistory, MasterLog
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -216,7 +217,7 @@ def product_log_list(request):
         #return HttpResponse(jsondata, content_type="application/json")
 
         context = paginator.paginate_queryset(prod_log, request)
-        serializer = ProductLogSerializer(context, many=True)
+        serializer = ProductLogResponseSerializer(context, many=True)
         return paginator.get_paginated_response(serializer.data)
 
     # for updating the quantity
@@ -321,7 +322,7 @@ def raw_material_log_list(request):
         else:
             queryset = RawMaterialLog.objects.all().select_related('raw_material_id').order_by('-date','-time')
         context = paginator.paginate_queryset(queryset, request)
-        serializer = RawMaterialLogSerializer(context, many=True)
+        serializer = RawMaterialLogResponseSerializer(context, many=True)
         #return Response(serializer.data)
         return paginator.get_paginated_response(serializer.data)
 
@@ -366,12 +367,15 @@ def raw_material_log_detail(request):
         context = paginator.paginate_queryset(raw_material_log, request)
         serializer = RawMaterialLogSerializer(context, many=True)
         return paginator.get_paginated_response(serializer.data)
-        
 
 
+@api_view(['GET'])
+def get_sale_history(request):
 
-
-
+    if request.method == 'GET':
+        queryset = MasterLog.objects.filter(action='SALE').select_related('item_id')
+        serializer = MasterLogResponseSerializer(queryset, many=True)
+        return Response(serializer.data)
 
 
 
