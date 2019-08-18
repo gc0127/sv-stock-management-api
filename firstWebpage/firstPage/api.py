@@ -373,9 +373,16 @@ def raw_material_log_detail(request):
 def get_sale_history(request):
 
     if request.method == 'GET':
-        queryset = MasterLog.objects.filter(action='SALE').select_related('item_id')
-        serializer = MasterLogResponseSerializer(queryset, many=True)
-        return Response(serializer.data)
+        paginator = LimitOffsetPagination()
+        if request.query_params.get('date'):
+            queryset = MasterLog.objects.filter(action='SALE').select_related('item').filter(date=request.query_params.get('date')).order_by('-time')
+
+        else:
+            queryset = MasterLog.objects.filter(action='SALE').select_related('item').order_by('-date', '-time')
+
+        context = paginator.paginate_queryset(queryset, request)
+        serializer = MasterLogResponseSerializer(context, many=True)
+        return paginator.get_paginated_response(serializer.data)
 
 
 

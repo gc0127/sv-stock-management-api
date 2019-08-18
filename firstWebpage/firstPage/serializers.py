@@ -39,7 +39,7 @@ class RawMaterialLogResponseSerializer(serializers.ModelSerializer):
 
 
 class MasterLogResponseSerializer(serializers.ModelSerializer):
-    item_id = ProductSerializer()
+    item = ProductSerializer()
 
     class Meta:
         model = MasterLog
