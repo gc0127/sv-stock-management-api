@@ -25,9 +25,8 @@ from django.http import HttpResponse
 def stocks_list(request):
     
     if request.method == 'GET':
-        sub_products = ['Armature', 'Head Upper Housing 1', 'Head Upper Housing 2', 'Valve Kit Final', 'Drive Housing',
-                        'Pipe Upper Housing', 'MS Pipe Plastic', 'Pipe Lower Housing 1', 'MS Pipe Steel',
-                        'Pipe Lower Housing 2']
+        sub_products = ['Copper Coil 24', 'Copper Coil 36', 'Aluminium Coil 24', 'Aluminium Coil 36', 'Hero Body with Lock',
+                        'Plunger with Rubber and Spring', 'Pipe with Bush', 'Hero with Plunger Assembly', 'EC with Plunger Assembly']
         queryset = RawMaterial.objects.all()
         queryset = queryset.exclude(item_name__in=sub_products)
         serializer = RawMaterialSerializer(queryset, many=True)
@@ -48,7 +47,7 @@ def stocks_list(request):
 
         '''For Storing data in Master Log'''
         master_log_ser = MasterLogSerializer(data=request.data)
-        master_log_ser.initial_data['item_id'] = request.data['id']
+        master_log_ser.initial_data['item'] = request.data['id']
         master_log_ser.initial_data['item_log_id'] = new_log.id
         master_log_ser.initial_data['item_type'] = "rawMaterial"
         master_log_ser.initial_data['action'] = "ADD"
@@ -104,7 +103,7 @@ def product_list(request):
 
             '''For Storing data in Master Log'''
             master_log_ser = MasterLogSerializer(data=request.data)
-            master_log_ser.initial_data['item_id'] = request.data['id']
+            master_log_ser.initial_data['item'] = request.data['id']
             master_log_ser.initial_data['item_log_id'] = new_log.id
             master_log_ser.initial_data['item_type'] = "product"
             if request.data['quantity'] > 0:
@@ -231,7 +230,7 @@ def product_log_list(request):
 
         '''For Storing data in Master Log'''
         master_log_ser = MasterLogSerializer(data=request.data)
-        master_log_ser.initial_data['item_id'] = request.data['product_id']
+        master_log_ser.initial_data['item'] = request.data['product_id']
         master_log_ser.initial_data['item_log_id'] = prod_row.id
         master_log_ser.initial_data['item_type'] = "product"
         master_log_ser.initial_data['action'] = "UPDATE"
@@ -252,11 +251,9 @@ def product_log_list(request):
         except ObjectDoesNotExist:
             master_row = None
 
-        sub_products = ['Armature', 'Head Upper Housing 1', 'Head Upper Housing 2', 'Valve Kit Final', 'Drive Housing',
-                        'Pipe Upper Housing', 'MS Pipe Plastic', 'Pipe Lower Housing 1', 'MS Pipe Steel',
-                        'Pipe Lower Housing 2']
+        sub_products = ['Copper Coil 24', 'Copper Coil 36', 'Aluminium Coil 24', 'Aluminium Coil 36', 'Hero Body with Lock',
+                        'Plunger with Rubber and Spring', 'Pipe with Bush', 'Hero with Plunger Assembly', 'EC with Plunger Assembly']
         if master_row is None:
-
             p_id = request.data['product_id']
             item_list = RawMaterialMapping.objects.filter(product_type_id=p_id)
             # product_qty = request.data['quantity']
@@ -336,7 +333,7 @@ def raw_material_log_list(request):
 
         '''For Storing data in Master Log'''
         master_log_ser = MasterLogSerializer(data=request.data)
-        master_log_ser.initial_data['item_id'] = request.data['raw_material_id']
+        master_log_ser.initial_data['item'] = request.data['raw_material_id']
         master_log_ser.initial_data['item_log_id'] = raw_material_row.id
         master_log_ser.initial_data['item_type'] = "rawMaterial"
         master_log_ser.initial_data['action'] = "UPDATE"
