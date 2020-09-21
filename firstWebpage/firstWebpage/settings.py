@@ -126,7 +126,7 @@ USE_TZ = True
 
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = False
-CORS_ORIGIN_WHITELIST = ('localhost:4200', 'sv-stockmanagement.surge.sh')
+CORS_ORIGIN_WHITELIST = ['localhost:4200', 'http://sv-stockmanagement.surge.sh♣']
 CORS_ALLOW_METHODS = (
     'DELETE',
     'GET',
