@@ -116,7 +116,7 @@ def product_list(request):
                 master_log_ser.save()
             print(master_log_ser.errors)
 
-            '''Updating the quantity value in the raw_material table '''
+            '''Updating the quantity value in the raw_material table , that is the ADD action is selected '''
             # sub_products = ['Armature', 'Head Upper Housing 1', 'Head Upper Housing 2', 'Valve Kit Final',
             #                 'Drive Housing', 'Pipe Upper Housing', 'MS Pipe Plastic', 'Pipe Lower Housing 1',
             #                 'MS Pipe Steel', 'Pipe Lower Housing 2']
@@ -146,7 +146,7 @@ def product_list(request):
             new_data = request.data
             prod = Products.objects.get(id=p_id)
             prod_name = prod.product_name
-            new_data['quantity'] = new_data['quantity'] + qty
+            new_data['quantity'] = new_data['quantity'] + qty    ### qty is the quantity of the product before
             new_data['product_name'] = prod_name
 
             # if prod_name in sub_products:  # request.data['id']
@@ -270,7 +270,7 @@ def product_log_list(request):
                 raw_material.save()
 
         #if prod_name in sub_products:
-        if prod.isRawMaterial:
+        if product.isRawMaterial:
             arm = RawMaterial.objects.get(item_name=prod_name)
             arm.quantity = product.quantity
             arm.save()
